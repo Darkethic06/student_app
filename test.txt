@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:studentapp/pages/Dashboard.dart';
+import 'package:studentapp/pages/Signup.dart';
+import 'package:studentapp/utils/myColors.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _obscureText = true;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: mainColor,
+      body: SafeArea(
+          child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 150,
+            ),
+            const Padding(
+              padding: const EdgeInsets.only(left: 40.0),
+              child: Text(
+                "Email",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Email',
+                    border: OutlineInputBorder()),
+              ),
+            ),
+            const Padding(
+              padding: const EdgeInsets.only(left: 40.0),
+              child: Text(
+                "Password",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
+              child: TextField(
+                maxLength: 8,
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Password',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      icon: Icon(_obscureText ? Icons.lock : Icons.lock_open),
+                    ),
+                    border: OutlineInputBorder()),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Dashboard()));
+                },
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(fontSize: 18),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                  backgroundColor: btnColor,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Create Your Account?",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => SignUp()));
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 14, color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                      backgroundColor: Color(0xFF06A1F8),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      )),
+    );
+  }
+}
