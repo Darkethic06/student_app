@@ -27,7 +27,7 @@ class _MenuPageState extends State<MenuPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
         child: Column(
           children: [
-            Topbar(),
+            // Topbar(),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

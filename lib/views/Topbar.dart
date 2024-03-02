@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/Notification.dart';
+import 'package:studentapp/pages/Profile.dart';
 import '../utils/myColors.dart';
 
 class Topbar extends StatefulWidget {
@@ -19,7 +19,10 @@ class _TopbarState extends State<Topbar> {
                 border: Border.all(color: mainColor),
                 borderRadius: BorderRadius.circular(50)),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => ProfilePage()));
+                },
                 icon: Icon(
                   Icons.person,
                   color: mainColor,

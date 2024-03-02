@@ -1,1 +1,1 @@
-String basePath = "https://student.worldtrippersclub.com/api/";
+String basePath = "https://student.truepid.in/api";

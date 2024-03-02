@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Dashboard.dart';
 import 'package:studentapp/utils/api.dart';
 import 'package:studentapp/utils/myColors.dart';
@@ -119,12 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                                 _validate = true;
                               } else {
                                 _validate = false;
-                                // Navigator.of(context).pushReplacement(
-                                //     MaterialPageRoute(
-                                //         builder: (context) => Dashboard()));
-                                // print(_studentCode.text);
-                                // print(_password.text);
-                                // studentLogin(_studentCode.text, _password.text);
+
+                                studentLogin(_studentCode.text, _password.text);
                               }
                             });
                           });
@@ -140,37 +137,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(top: 30.0),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       Padding(
-                    //         padding: const EdgeInsets.all(8.0),
-                    //         child: Text(
-                    //           "Forget Username?",
-                    //           style: TextStyle(color: Colors.white),
-                    //         ),
-                    //       ),
-                    //       ElevatedButton(
-                    //         onPressed: () {
-                    //           Navigator.of(context).push(MaterialPageRoute(
-                    //               builder: (context) => SignUp()));
-                    //         },
-                    //         child: Text(
-                    //           "Find Now",
-                    //           style:
-                    //               TextStyle(fontSize: 14, color: Colors.white),
-                    //         ),
-                    //         style: ElevatedButton.styleFrom(
-                    //           padding: EdgeInsets.symmetric(
-                    //               horizontal: 8, vertical: 5),
-                    //           backgroundColor: Color.fromRGBO(6, 161, 248, 1),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 ), // Add your login form widget here
               ),
@@ -181,34 +147,27 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<LoginData> studentLogin(String student_code, password) async {
-    final http.Response response = await http.post(
-      Uri.parse(basePath + 'login'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(
-          <String, String>{'student_code': student_code, 'password': password}),
+  void studentLogin(String studentCode, String password) async {
+    final response = await http.post(
+      Uri.parse('${basePath}/login'), // Replace with your API endpoint
+      body: {'student_code': studentCode, 'password': password},
     );
 
-    if (response.statusCode == 201) {
-      return LoginData.fromJson(json.decode(response.body));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      String token = data['token'];
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', token);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => Dashboard()));
     } else {
-      throw Exception('Failed to Login');
+      final data = jsonDecode(response.body);
+
+      final snackBar = SnackBar(
+        content: Text(data['message']),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print(response.body);
     }
-  }
-}
-
-class LoginData {
-  final String student_code;
-  final String password;
-
-  LoginData({required this.student_code, required this.password});
-
-  factory LoginData.fromJson(Map<String, dynamic> json) {
-    return LoginData(
-      student_code: json['student_code'],
-      password: json['password'],
-    );
   }
 }

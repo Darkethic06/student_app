@@ -20,7 +20,7 @@ class _FeePageState extends State<FeePage> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
         child: Column(
           children: [
-            Topbar(),
+            // Topbar(),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
