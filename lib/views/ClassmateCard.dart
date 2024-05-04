@@ -3,8 +3,9 @@ import 'package:studentapp/utils/myColors.dart';
 
 class ClassmateCard extends StatelessWidget {
   final String name;
+  final String image;
 
-  const ClassmateCard({required this.name, super.key});
+  const ClassmateCard({required this.name, super.key, this.image = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +13,7 @@ class ClassmateCard extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundColor: null,
-          backgroundImage: NetworkImage(
-              "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"),
+          backgroundImage: NetworkImage(image),
           radius: 50,
         ),
         Padding(

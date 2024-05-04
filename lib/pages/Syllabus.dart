@@ -56,7 +56,9 @@ class _SyllabusPageState extends State<SyllabusPage> {
       body: SafeArea(
         child: data != null && data.isNotEmpty
             ? buildContent()
-            : Center(child: CircularProgressIndicator()),
+            : data == null
+                ? Center(child: Text("No Syllabus Found"))
+                : Center(child: CircularProgressIndicator()),
       ),
     );
   }
