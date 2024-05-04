@@ -65,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
                           EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: TextField(
                         controller: _studentCode,
-                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -158,8 +157,10 @@ class _LoginPageState extends State<LoginPage> {
       String token = data['token'];
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
+      // if (token != null) {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => Dashboard()));
+      // }R
     } else {
       final data = jsonDecode(response.body);
 

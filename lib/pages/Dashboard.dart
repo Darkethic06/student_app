@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Fee.dart';
-import 'package:studentapp/pages/HomePage.dart';
 import 'package:studentapp/pages/Menu.dart';
 import 'package:studentapp/pages/Notification.dart';
 import 'package:studentapp/utils/myColors.dart';
+import 'package:http/http.dart' as http;
+
+import '../utils/api.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -21,6 +26,40 @@ class _DashboardState extends State<Dashboard> {
   }
 
   final pages = [FeePage(), MenuPage(), NotificationPage()];
+
+  // String apiResponse = '';
+  String name = '';
+  String email = '';
+  String studentCode = '';
+  String phone = '';
+  String fathers_name = '';
+  String mothers_name = '';
+  String imageUrl = '';
+
+  Future<void> fetchProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final uri = Uri.parse('$basePath/user');
+    final headers = {'Authorization': 'Bearer $token'};
+    final response = await http.get(uri, headers: headers);
+
+    final data = jsonDecode(response.body);
+    setState(() {
+      name = data['data']['full_name'];
+      studentCode = data['data']['student_code'];
+      phone = data['data']['phone'];
+      fathers_name = data['data']['fathers_name'];
+      mothers_name = data['data']['mothers_name'];
+      imageUrl = data['data']['profile_photo_url'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,32 +69,40 @@ class _DashboardState extends State<Dashboard> {
         backgroundColor: mainColor,
       ),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
+            UserAccountsDrawerHeader(
+                accountName: Text(name),
+                accountEmail: Text(studentCode),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage(imageUrl),
+                )),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text("Father\'s Name",
+                  style: TextStyle(fontWeight: FontWeight.w700)),
+              subtitle: Text(fathers_name), // Close drawer on tap
             ),
             ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
+              leading: Icon(Icons.person),
+              title: Text(
+                "Mother\'s Name",
+                style: TextStyle(fontWeight: FontWeight.w700),
+              ), // Close drawer on tap
+              subtitle: Text(mothers_name), // Close drawer on tap
             ),
             ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
+              leading: Icon(Icons.phone),
+              title: Text("Phone",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700)), // Close drawer on tap
+              subtitle: Text(phone), // Close drawer on tap
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () => Navigator.pop(context), // Close drawer on tap
             ),
           ],
         ),

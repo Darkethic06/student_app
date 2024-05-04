@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentapp/pages/Assignments.dart';
 import 'package:studentapp/pages/Classmate.dart';
 import 'package:studentapp/pages/Fee.dart';
+import 'package:studentapp/pages/Gallery.dart';
 import 'package:studentapp/pages/Notice.dart';
 import 'package:studentapp/pages/ReportCard.dart';
 import 'package:studentapp/pages/SubjectTeacher.dart';
@@ -118,10 +119,16 @@ class _MenuPageState extends State<MenuPage> {
                         mySize: 50,
                       ),
                     ),
-                    FeatureCard(
-                      name: "Gallery",
-                      featureIcon: Icons.image,
-                      mySize: 50,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => GalleryPage()));
+                      },
+                      child: FeatureCard(
+                        name: "Gallery",
+                        featureIcon: Icons.image,
+                        mySize: 50,
+                      ),
                     ),
                   ],
                 ),
