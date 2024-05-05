@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Fee.dart';
+import 'package:studentapp/pages/Login.dart';
 import 'package:studentapp/pages/Menu.dart';
 import 'package:studentapp/pages/Notification.dart';
 import 'package:studentapp/utils/myColors.dart';
@@ -102,7 +103,12 @@ class _DashboardState extends State<Dashboard> {
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Logout'),
-              onTap: () => Navigator.pop(context), // Close drawer on tap
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                prefs.clear();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              }, // Close drawer on tap
             ),
           ],
         ),

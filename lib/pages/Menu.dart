@@ -49,11 +49,11 @@ class _MenuPageState extends State<MenuPage> {
                         mySize: 50,
                       ),
                     ),
-                    FeatureCard(
-                      name: "Activity",
-                      featureIcon: Icons.calendar_month,
-                      mySize: 50,
-                    ),
+                    // FeatureCard(
+                    //   name: "Activity",
+                    //   featureIcon: Icons.calendar_month,
+                    //   mySize: 50,
+                    // ),
                     FeatureCard(
                       name: "Attendance",
                       featureIcon: Icons.school_rounded,
