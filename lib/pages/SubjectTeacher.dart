@@ -26,7 +26,7 @@ class _SubjectTeacherState extends State<SubjectTeacher> {
       Map result = jsonDecode(value.body);
       setState(() {
         teachers = result['data'];
-        print(teachers);
+        // print(result);
       });
     });
   }
@@ -40,21 +40,29 @@ class _SubjectTeacherState extends State<SubjectTeacher> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        SizedBox(
-          height: 20,
+        body: teachers != null && teachers.isNotEmpty
+            ? teacherWidget()
+            : Center(child: CircularProgressIndicator()));
+  }
+
+  Widget teacherWidget() {
+    return Column(children: [
+      SizedBox(
+        height: 20,
+      ),
+      Expanded(
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, crossAxisSpacing: 0, mainAxisSpacing: 8),
+          itemCount: teachers.length,
+          itemBuilder: ((context, index) {
+            return ClassmateCard(
+              name: teachers[index]['teacher']['full_name'],
+              image: teachers[index]['teacher']['profile_photo_url'],
+            );
+          }),
         ),
-        Expanded(
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, crossAxisSpacing: 0, mainAxisSpacing: 8),
-            itemCount: teachers.length,
-            itemBuilder: ((context, index) {
-              return ClassmateCard(name: teachers[index]['full_name']);
-            }),
-          ),
-        ),
-      ]),
-    );
+      ),
+    ]);
   }
 }
