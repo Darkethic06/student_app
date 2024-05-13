@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:studentapp/pages/ViewSyllabusPdf.dart';
 import 'package:studentapp/utils/myColors.dart';
 
 // ignore: must_be_immutable
 class ReportCardContainer extends StatelessWidget {
-  ReportCardContainer({super.key});
+  final String title;
+  final String examDate;
+  final String published;
+  final String file;
+
+  ReportCardContainer(
+      {super.key,
+      required this.title,
+      required this.examDate,
+      required this.published,
+      required this.file});
   DateTime now = DateTime.now();
   DateFormat formatter = DateFormat('MM/dd/yyyy hh:mm a');
   @override
@@ -40,18 +51,22 @@ class ReportCardContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Semester 2",
+                    title,
                     style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Text(
-                      "2020-2021",
+                      "Exam Date:" +
+                          DateFormat('d/M/yyyy')
+                              .format(DateTime.parse(examDate)),
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                   ),
                   Text(
-                    "Updated On: " + formatter.format(now),
+                    "Published On:" +
+                        DateFormat('d/M/yyyy h:mm a')
+                            .format(DateTime.parse(published)),
                     style: TextStyle(
                       color: fontColor,
                       fontSize: 18,
@@ -68,7 +83,13 @@ class ReportCardContainer extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 2,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ViewSyllabusPdf(pdfLink: file)),
+                    );
+                  },
                   child: Text(
                     "View",
                     style: TextStyle(fontSize: 20),

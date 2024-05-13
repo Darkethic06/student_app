@@ -42,7 +42,9 @@ class _AllTeacherState extends State<AllTeacher> {
     return Scaffold(
         body: teachers != null && teachers.isNotEmpty
             ? teacherWidget()
-            : Center(child: CircularProgressIndicator()));
+            : teachers.isEmpty
+                ? Center(child: Text("No Teacher Found"))
+                : Center(child: CircularProgressIndicator()));
   }
 
   Widget teacherWidget() {

@@ -52,7 +52,7 @@ class _GalleryPageState extends State<GalleryPage> {
           ),
           itemCount: photos.length,
           itemBuilder: (context, index) {
-            print(photos[index]['full_image_path']);
+            // print(photos[index]['full_image_path']);
             return Image.network(photos[index]['full_image_path'],
                 fit: BoxFit.cover);
           },

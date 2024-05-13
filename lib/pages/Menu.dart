@@ -60,7 +60,7 @@ class _MenuPageState extends State<MenuPage> {
                       mySize: 50,
                     ),
                     FeatureCard(
-                      name: "Timetable",
+                      name: "Exam",
                       featureIcon: Icons.timer_rounded,
                       mySize: 50,
                     ),
