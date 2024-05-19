@@ -75,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
           children: [
             UserAccountsDrawerHeader(
                 accountName: Text(name),
-                accountEmail: Text(studentCode),
+                accountEmail: Text("Student Code: " + studentCode),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: NetworkImage(imageUrl),
                 )),

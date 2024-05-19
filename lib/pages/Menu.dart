@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:studentapp/pages/Assignments.dart';
 import 'package:studentapp/pages/Classmate.dart';
+import 'package:studentapp/pages/ExamPage.dart';
 import 'package:studentapp/pages/Fee.dart';
 import 'package:studentapp/pages/Gallery.dart';
 import 'package:studentapp/pages/Notice.dart';
@@ -59,10 +61,16 @@ class _MenuPageState extends State<MenuPage> {
                       featureIcon: Icons.school_rounded,
                       mySize: 50,
                     ),
-                    FeatureCard(
-                      name: "Exam",
-                      featureIcon: Icons.timer_rounded,
-                      mySize: 50,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ExamPage()));
+                      },
+                      child: FeatureCard(
+                        name: "Exam",
+                        featureIcon: Icons.timer_rounded,
+                        mySize: 50,
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
