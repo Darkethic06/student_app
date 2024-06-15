@@ -15,8 +15,8 @@ class FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50,
-      height: 50,
+      width: MediaQuery.of(context).size.width / 5,
+      height: 100,
       decoration: BoxDecoration(
           color: mainColor, borderRadius: BorderRadius.circular(15)),
       child: Column(

@@ -5,10 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/utils/api.dart';
 import 'package:studentapp/utils/myColors.dart';
 import 'package:studentapp/views/AssignmentCard.dart';
-import 'package:studentapp/views/ReportCardContainer.dart';
-
-import 'AllTeacher.dart';
-import 'SubjectTeacher.dart';
 import 'package:http/http.dart' as http;
 
 class AssignmentsPage extends StatefulWidget {
@@ -46,25 +42,14 @@ class _AssignmentsPageState extends State<AssignmentsPage> {
         length: 2,
         child: Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.white),
               title: Text(
-                "Assignments",
+                "ASSGINMENTS",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
               ),
               backgroundColor: mainColor,
               centerTitle: true,
-              // bottom: TabBar(
-              //     labelColor: Colors.white,
-              //     unselectedLabelColor: btnColor,
-              //     indicatorColor: btnColor,
-              //     tabs: <Widget>[
-              //       Container(
-              //         child: Tab(
-              //           text: "All",
-              //         ),
-              //       ),
-              //       Tab(
-              //         text: "Subjects",
-              //       ),
-              //     ]),
             ),
             body: assignments.isEmpty
                 ? Center(
@@ -84,7 +69,7 @@ class _AssignmentsPageState extends State<AssignmentsPage> {
                           );
                         })
                     : Center(
-                        child: Text("No Notice Found"),
+                        child: Text("No Assignments Found"),
                       )));
   }
 }

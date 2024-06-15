@@ -26,7 +26,7 @@ class _ClassmatePageState extends State<ClassmatePage> {
       Map result = jsonDecode(value.body);
       setState(() {
         students = result['data'];
-        print(students);
+        // print(students);
       });
     });
   }
@@ -41,8 +41,10 @@ class _ClassmatePageState extends State<ClassmatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
           title: Text(
-            "Classmates",
+            "CLASSMATES",
+            style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
           backgroundColor: mainColor,
