@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studentapp/pages/Login.dart';
 import 'package:studentapp/views/SplashScreen.dart';
 
 void main() {

@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/utils/api.dart';
-import 'package:studentapp/utils/myColors.dart';
 import 'package:http/http.dart' as http;
 
 import '../views/NoticeCard.dart';

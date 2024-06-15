@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studentapp/utils/myColors.dart';
 
 class ClassmateCard extends StatelessWidget {
   final String name;

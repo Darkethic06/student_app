@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../utils/myColors.dart';
 import '../views/Feature.dart';
-import '../views/Topbar.dart';
 
 class FeePage extends StatefulWidget {
   const FeePage({super.key});

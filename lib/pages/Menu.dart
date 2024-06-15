@@ -6,17 +6,13 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:studentapp/pages/Assignments.dart';
 import 'package:studentapp/pages/Classmate.dart';
 import 'package:studentapp/pages/ExamPage.dart';
-import 'package:studentapp/pages/Fee.dart';
 import 'package:studentapp/pages/Gallery.dart';
 import 'package:studentapp/pages/Notice.dart';
 import 'package:studentapp/pages/ReportCard.dart';
-import 'package:studentapp/pages/SubjectTeacher.dart';
 import 'package:studentapp/pages/Syllabus.dart';
 import 'package:studentapp/pages/Teachers.dart';
 import 'package:studentapp/utils/myColors.dart';
 import 'package:studentapp/views/Feature.dart';
-import '../views/Topbar.dart';
-import 'Notification.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});

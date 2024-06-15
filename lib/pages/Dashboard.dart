@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Fee.dart';
 import 'package:studentapp/pages/Login.dart';
 import 'package:studentapp/pages/Menu.dart';
-import 'package:studentapp/pages/Notification.dart';
 import 'package:studentapp/pages/Profile.dart';
 import 'package:studentapp/utils/myColors.dart';
 import 'package:http/http.dart' as http;
