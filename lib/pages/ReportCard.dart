@@ -26,11 +26,12 @@ class _ReportCardPageState extends State<ReportCardPage> {
       Map result = jsonDecode(value.body);
       setState(() {
         reportCards = result['data'];
-        print(reportCards[0]);
-        print(reportCards[0]['exam']['name']);
-        print(reportCards[0]['created_at']);
-        print(reportCards[0]['created_at']);
-        print(reportCards[0]['file_full_path']);
+        // print(result['data']);
+        // print(reportCards[0]);
+        // print(reportCards[0]['class']);
+        // print(reportCards[0]['created_at']);
+        // print(reportCards[0]['created_at']);
+        // print(reportCards[0]['file_full_path']);
       });
     });
   }
@@ -47,8 +48,10 @@ class _ReportCardPageState extends State<ReportCardPage> {
         length: 5,
         child: Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.white),
               title: Text(
                 "Report Card",
+                style: TextStyle(color: Colors.white),
               ),
               backgroundColor: mainColor,
               centerTitle: true,
@@ -106,7 +109,7 @@ class _ReportCardPageState extends State<ReportCardPage> {
                 : reportCards.isNotEmpty
                     ? ReportCardContainer(
                         title: reportCards[0]['exam']['name'],
-                        examDate: reportCards[0]['exam']['exam_date'],
+                        examClass: reportCards[0]['class']['class'],
                         published: reportCards[0]['created_at'],
                         file: reportCards[0]['file_full_path'],
                       )

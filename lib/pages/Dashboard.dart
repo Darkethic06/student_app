@@ -46,6 +46,7 @@ class _DashboardState extends State<Dashboard> {
     final response = await http.get(uri, headers: headers);
 
     final data = jsonDecode(response.body);
+    print(data);
     setState(() {
       name = data['data']['full_name'];
       studentCode = data['data']['student_code'];
@@ -60,6 +61,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     fetchProfile();
+    // print();
   }
 
   @override

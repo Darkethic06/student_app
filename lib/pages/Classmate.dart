@@ -26,7 +26,7 @@ class _ClassmatePageState extends State<ClassmatePage> {
       Map result = jsonDecode(value.body);
       setState(() {
         students = result['data'];
-        // print(students);
+        print(students);
       });
     });
   }

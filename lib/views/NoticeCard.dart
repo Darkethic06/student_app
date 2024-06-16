@@ -33,29 +33,62 @@ class NoticeCard extends StatelessWidget {
               width: 1.0,
             ),
           ),
-          color: Colors.black.withOpacity(0.05),
+          // color: Colors.black.withOpacity(0.05),
         ),
-        child: Expanded(
-            child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      title,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      "Date " +
+                          DateFormat('d/M/yyyy').format(DateTime.parse(date)),
+                      style: TextStyle(
+                        color: fontColor,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      "Updated on " +
+                          DateFormat('d/M/yyyy').format(DateTime.parse(date)),
+                      style: TextStyle(
+                        color: fontColor,
+                        fontSize: 15,
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Text(
-                "Published On: " +
-                    DateFormat('d/M/yyyy h:mm a').format(DateTime.parse(date)),
-                style: TextStyle(
-                  color: fontColor,
-                  fontSize: 18,
-                ),
-              )
-            ],
-          ),
-        )),
+            )),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+              child: Icon(
+                Icons.assignment,
+                size: 40,
+                color: mainColor,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

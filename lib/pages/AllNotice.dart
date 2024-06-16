@@ -26,7 +26,6 @@ class _AllNoticeState extends State<AllNotice> {
       Map result = jsonDecode(value.body);
       setState(() {
         notice = result['data'];
-        // print(notice[0]['title']);
       });
     });
   }

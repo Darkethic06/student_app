@@ -7,6 +7,7 @@ import 'package:studentapp/pages/Assignments.dart';
 import 'package:studentapp/pages/Classmate.dart';
 import 'package:studentapp/pages/ExamPage.dart';
 import 'package:studentapp/pages/Gallery.dart';
+import 'package:studentapp/pages/Holiday.dart';
 import 'package:studentapp/pages/Notice.dart';
 import 'package:studentapp/pages/ReportCard.dart';
 import 'package:studentapp/pages/Syllabus.dart';
@@ -222,7 +223,7 @@ class _MenuPageState extends State<MenuPage> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => GalleryPage()));
+                                  builder: (context) => HolidayPage()));
                             },
                             child: FeatureCard(
                               name: "Holidays",

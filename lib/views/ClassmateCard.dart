@@ -17,7 +17,10 @@ class ClassmateCard extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(name),
+          child: Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
         )
       ],
     );
