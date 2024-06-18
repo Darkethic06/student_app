@@ -30,7 +30,11 @@ class FeatureCard extends StatelessWidget {
           ),
           Text(
             name,
-            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 13.0,
+                fontWeight: FontWeight.w500),
           )
         ],
       ),

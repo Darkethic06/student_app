@@ -3,10 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:studentapp/pages/Assignments.dart';
+import 'package:studentapp/pages/Classmate.dart';
+import 'package:studentapp/pages/ExamPage.dart';
 import 'package:studentapp/pages/Fee.dart';
+import 'package:studentapp/pages/Gallery.dart';
+import 'package:studentapp/pages/Holiday.dart';
 import 'package:studentapp/pages/Login.dart';
 import 'package:studentapp/pages/Menu.dart';
+import 'package:studentapp/pages/Notice.dart';
 import 'package:studentapp/pages/Profile.dart';
+import 'package:studentapp/pages/ReportCard.dart';
+import 'package:studentapp/pages/Syllabus.dart';
+import 'package:studentapp/pages/Teachers.dart';
 import 'package:studentapp/utils/myColors.dart';
 import 'package:http/http.dart' as http;
 
@@ -117,9 +126,8 @@ class _DashboardState extends State<Dashboard> {
                                 color:
                                     Colors.white), // Adjust font size as needed
                           ),
-                          // Add your additional text widget here
                           Text(
-                            "Additional Text", // Replace with your text content
+                            "Additional Text",
                             style: TextStyle(
                                 fontSize: 14.0,
                                 color:
@@ -133,11 +141,15 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => NoticePage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Boxicons.bxs_bell_ring,
@@ -149,11 +161,12 @@ class _DashboardState extends State<Dashboard> {
                       fontWeight: FontWeight.w700)), // Close drawer on tap
             ),
             ListTile(
+              onTap: () {},
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Icons.school_rounded,
@@ -166,28 +179,34 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => ExamPage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Boxicons.bx_alarm,
                   color: Colors.white,
                 ),
               ),
-              title: Text("Exam",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700)), // Close drawer on tap
-              // Close drawer on tap
+              title:
+                  Text("Exam", style: TextStyle(fontWeight: FontWeight.w700)),
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AssignmentsPage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Icons.edit_note_rounded,
@@ -200,11 +219,15 @@ class _DashboardState extends State<Dashboard> {
               // Close drawer on tap
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SyllabusPage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Icons.collections_bookmark_rounded,
@@ -217,6 +240,10 @@ class _DashboardState extends State<Dashboard> {
               // Close drawer on tap
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TeachersPage()));
+              },
               leading: Container(
                 padding: EdgeInsets.all(8.0), // Adjust padding as needed
                 decoration: BoxDecoration(
@@ -234,11 +261,15 @@ class _DashboardState extends State<Dashboard> {
               // Close drawer on tap
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ClassmatePage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Icons.group,
@@ -251,11 +282,15 @@ class _DashboardState extends State<Dashboard> {
               // Close drawer on tap
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ReportCardPage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Icons.cast_for_education,
@@ -268,11 +303,15 @@ class _DashboardState extends State<Dashboard> {
               // Close drawer on tap
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => GalleryPage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Icons.image,
@@ -280,16 +319,18 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
               title: Text("Gallery",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700)), // Close drawer on tap
-              // Close drawer on tap
+                  style: TextStyle(fontWeight: FontWeight.w700)),
             ),
             ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HolidayPage()));
+              },
               leading: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: mainColor, // Change background color as desired
+                  color: mainColor,
                 ),
                 child: Icon(
                   Icons.beach_access,

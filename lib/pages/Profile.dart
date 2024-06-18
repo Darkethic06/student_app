@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 3,
                   child: Image.asset(
-                    './profile-banner.jpg',
+                    'assets/profile-banner.jpg',
                     fit: BoxFit.cover,
                   ),
                 ),

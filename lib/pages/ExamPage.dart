@@ -20,13 +20,13 @@ class _ExamPageState extends State<ExamPage> {
   fetchExams() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final uri = Uri.parse('$basePath/exam-details');
+    final uri = Uri.parse('$basePath/exam-list');
     final headers = {'Authorization': 'Bearer $token'};
     await http.get(uri, headers: headers).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
         exams = result['data'];
-        // print();
+        print(exams);
       });
     });
   }
@@ -41,8 +41,10 @@ class _ExamPageState extends State<ExamPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
           title: Text(
-            "Assignments",
+            "EXAM",
+            style: TextStyle(color: Colors.white),
           ),
           backgroundColor: mainColor,
           centerTitle: true,

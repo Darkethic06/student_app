@@ -1,21 +1,20 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Dashboard.dart';
 import 'package:studentapp/utils/api.dart';
 import 'package:studentapp/utils/myColors.dart';
 import 'package:http/http.dart' as http;
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class Newlogin extends StatefulWidget {
+  const Newlogin({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Newlogin> createState() => _NewloginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _NewloginState extends State<Newlogin> {
   bool _obscureText = true;
 
   final _studentCode = TextEditingController();
@@ -74,14 +73,13 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: _studentCode,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Boxicons.bx_book_reader),
-                        fillColor: Color(0xFFeef7fe),
+                        fillColor: Colors.white,
                         filled: true,
                         hintText: 'Student Code',
                         errorStyle: TextStyle(color: btnColor),
                         errorText:
                             _validate ? 'Student Code Can\'t Be Empty' : null,
-                        border: InputBorder.none),
+                        border: OutlineInputBorder()),
                   ),
                 ),
                 const Padding(
@@ -98,37 +96,23 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: _obscureText,
                     controller: _password,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: Color(0xFFeef7fe),
-                          width: 2.0,
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: 'Password',
+                        errorStyle: TextStyle(color: btnColor),
+                        errorText:
+                            _validate ? 'Password Can\'t Be Empty' : null,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          icon: Icon(_obscureText
+                              ? Icons.visibility
+                              : Icons.visibility_off),
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xFFeef7fe),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      prefixIcon: Icon(Icons.lock),
-                      fillColor: Color(0xFFeef7fe),
-                      filled: true,
-                      hintText: 'Password',
-                      errorStyle: TextStyle(color: btnColor),
-                      errorText: _validate ? 'Password Can\'t Be Empty' : null,
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                        icon: Icon(_obscureText
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                      ),
-                    ),
+                        border: OutlineInputBorder()),
                   ),
                 ),
                 Center(
@@ -148,16 +132,13 @@ class _LoginPageState extends State<LoginPage> {
                       });
                     },
                     child: Text(
-                      "LOGIN",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      "Sign In",
+                      style: TextStyle(fontSize: 18),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 65, vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
-                      ),
-                      backgroundColor: mainColor,
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                      backgroundColor: btnColor,
                     ),
                   ),
                 ),
