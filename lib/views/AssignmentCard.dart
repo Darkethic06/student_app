@@ -65,12 +65,12 @@ class AssignmentCard extends StatelessWidget {
                         Text(
                           title,
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w500),
+                              fontSize: 19, fontWeight: FontWeight.w500),
                         ),
                         Text(
                           "(" + subject + ")",
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w500),
+                              fontSize: 17, fontWeight: FontWeight.w500),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -90,7 +90,7 @@ class AssignmentCard extends StatelessWidget {
                                   .format(DateTime.parse(submittedBy)),
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 17,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600),
                         ),
                         Text(
@@ -99,7 +99,7 @@ class AssignmentCard extends StatelessWidget {
                                   .format(DateTime.parse(updated)),
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 17,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600),
                         )
                       ],

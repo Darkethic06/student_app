@@ -18,73 +18,91 @@ class ExamCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          // height: MediaQuery.of(context).size.height / 4,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+      child: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
                 color: Colors.white,
-                width: 1.0,
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.white,
+                    width: 1.0,
+                  ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 10.0,
+                    spreadRadius: 4.0,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ]
+                // color: Colors.white,
+                ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.s,
+                children: [
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Icon(
+                  //     Icons.assignment,
+                  //     size: 60,
+                  //   ),
+                  // ),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        "(" + subject + ")",
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Text(
+                          "Exam Date:" +
+                              DateFormat('d/M/yyyy')
+                                  .format(DateTime.parse(examDate)),
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Exam Time:" + startTime + "-" + endTime,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  )),
+                ],
               ),
             ),
-            color: Colors.black.withOpacity(0.05),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.s,
-              children: [
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Icon(
-                //     Icons.assignment,
-                //     size: 60,
-                //   ),
-                // ),
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style:
-                          TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "(" + subject + ")",
-                      style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF3D6386)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Text(
-                        "Exam Date:" +
-                            DateFormat('d/M/yyyy')
-                                .format(DateTime.parse(examDate)),
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
-                      ),
-                    ),
-                    Text(
-                      "Exam Time:" + startTime + "-" + endTime,
-                      style: TextStyle(
-                        color: fontColor,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                )),
-              ],
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
