@@ -49,7 +49,11 @@ class _SyllabusPageState extends State<SyllabusPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Syllabus"),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          "Syllabus",
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         backgroundColor: mainColor,
       ),

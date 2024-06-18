@@ -19,13 +19,12 @@ class _ClassNoticeState extends State<ClassNotice> {
   fetchNotice() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final uri = Uri.parse('$basePath/get-class-notice');
+    final uri = Uri.parse('$basePath/get-class-notice-list');
     final headers = {'Authorization': 'Bearer $token'};
     await http.get(uri, headers: headers).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
         notice = result['data'];
-        // print();
       });
     });
   }

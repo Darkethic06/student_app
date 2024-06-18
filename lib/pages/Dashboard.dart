@@ -46,6 +46,7 @@ class _DashboardState extends State<Dashboard> {
   String fathers_name = '';
   String mothers_name = '';
   String imageUrl = '';
+  String percentage = "";
 
   Future<void> fetchProfile() async {
     final prefs = await SharedPreferences.getInstance();
@@ -55,7 +56,7 @@ class _DashboardState extends State<Dashboard> {
     final response = await http.get(uri, headers: headers);
 
     final data = jsonDecode(response.body);
-    print(data);
+    // print(data);
     setState(() {
       name = data['data']['full_name'];
       studentCode = data['data']['student_code'];
@@ -66,10 +67,24 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  // Future<void> getPercentage() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final token = prefs.getString('token');
+  //   final uri = Uri.parse('$basePath/get-dashboard-user-attendance');
+  //   final headers = {'Authorization': 'Bearer $token'};
+  //   final response = await http.get(uri, headers: headers);
+
+  //   final data = jsonDecode(response.body);
+  //   setState(() {
+  //     print(data);
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
     fetchProfile();
+    // getPercentage();
     // print();
   }
 
@@ -350,7 +365,7 @@ class _DashboardState extends State<Dashboard> {
                 prefs.clear();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
-              }, // Close drawer on tap
+              },
             ),
           ],
         ),

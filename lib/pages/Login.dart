@@ -191,7 +191,6 @@ class _LoginPageState extends State<LoginPage> {
         content: Text(data['message']),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      // print(response.body);
     }
   }
 }
