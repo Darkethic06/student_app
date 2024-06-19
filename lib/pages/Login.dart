@@ -74,14 +74,29 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: _studentCode,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Boxicons.bx_book_reader),
-                        fillColor: Color(0xFFeef7fe),
-                        filled: true,
-                        hintText: 'Student Code',
-                        errorStyle: TextStyle(color: btnColor),
-                        errorText:
-                            _validate ? 'Student Code Can\'t Be Empty' : null,
-                        border: InputBorder.none),
+                      prefixIcon: Icon(Boxicons.bx_book_reader),
+                      fillColor: Color(0xFFeef7fe),
+                      filled: true,
+                      hintText: 'Student Code',
+                      errorStyle: TextStyle(color: btnColor),
+                      errorText:
+                          _validate ? 'Student Code Can\'t Be Empty' : null,
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Color(0xFFeef7fe),
+                          width: 2.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color(0xFFeef7fe),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
                   ),
                 ),
                 const Padding(

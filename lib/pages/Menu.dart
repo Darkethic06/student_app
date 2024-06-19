@@ -1,19 +1,26 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Assignments.dart';
 import 'package:studentapp/pages/Classmate.dart';
 import 'package:studentapp/pages/ExamPage.dart';
 import 'package:studentapp/pages/Gallery.dart';
 import 'package:studentapp/pages/Holiday.dart';
 import 'package:studentapp/pages/Notice.dart';
+import 'package:studentapp/pages/PeriodList.dart';
 import 'package:studentapp/pages/ReportCard.dart';
 import 'package:studentapp/pages/Syllabus.dart';
 import 'package:studentapp/pages/Teachers.dart';
+import 'package:studentapp/utils/api.dart';
 import 'package:studentapp/utils/myColors.dart';
 import 'package:studentapp/views/Feature.dart';
+
+import 'package:http/http.dart' as http;
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -23,6 +30,31 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  String percentage = "";
+
+  Future<void> getPercentage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final uri = Uri.parse('$basePath/get-dashboard-user-attendance');
+    final headers = {'Authorization': 'Bearer $token'};
+    final response = await http.get(uri, headers: headers);
+
+    final data = jsonDecode(response.body);
+    setState(() {
+      // print(data);
+      percentage = data['data'];
+      // double parsedPercentage =  ?? 0.0;
+      // double percentageValue = double.tryParse(percentage) ?? 0 / 100;\
+      // print((double.tryParse(percentage) ?? 0.0) / 100);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPercentage();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,12 +104,12 @@ class _MenuPageState extends State<MenuPage> {
                     CircularPercentIndicator(
                       radius: MediaQuery.of(context).size.height / 9,
                       lineWidth: 15,
-                      percent: 0.9,
+                      percent: (double.tryParse(percentage) ?? 0.0) / 100,
                       backgroundColor: Colors.blue,
                       progressColor: mainColor,
                       circularStrokeCap: CircularStrokeCap.round,
                       center: Text(
-                        "94%\nPercent",
+                        "${percentage}%\nPercent",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20,
@@ -235,7 +267,7 @@ class _MenuPageState extends State<MenuPage> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => GalleryPage()));
+                                builder: (context) => PeriodList()));
                           },
                           child: FeatureCard(
                             name: "Time Table",
