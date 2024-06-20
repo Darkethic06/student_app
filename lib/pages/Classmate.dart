@@ -58,21 +58,6 @@ class _ClassmatePageState extends State<ClassmatePage> {
     return SafeArea(
       child: Column(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(12.0),
-          //   child: SearchBar(
-          //     hintText: "Search",
-          //     trailing: <Widget>[
-          //       Tooltip(
-          //         message: 'Change brightness mode',
-          //         child: IconButton(
-          //           onPressed: () {},
-          //           icon: const Icon(Icons.search),
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
           SizedBox(
             height: 12,
           ),
@@ -82,10 +67,13 @@ class _ClassmatePageState extends State<ClassmatePage> {
                   crossAxisCount: 2, crossAxisSpacing: 0, mainAxisSpacing: 8),
               itemCount: students.length,
               itemBuilder: ((context, index) {
+                final student = students[index];
+                final name = student['student']["full_name"] ?? 'No Name';
+                final image = student['student']["profile_photo_path"] ??
+                    '${assetPath}admin_assets/demo.png';
                 return ClassmateCard(
-                  name: students[index]["full_name"],
-                  image: students[index]["profile_photo_path"] ??
-                      students[index]["profile_photo_url"],
+                  name: name,
+                  image: image,
                 );
               }),
             ),

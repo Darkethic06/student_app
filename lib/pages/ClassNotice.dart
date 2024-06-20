@@ -25,6 +25,7 @@ class _ClassNoticeState extends State<ClassNotice> {
       Map result = jsonDecode(value.body);
       setState(() {
         notice = result['data'];
+        print(notice);
       });
     });
   }
@@ -47,9 +48,9 @@ class _ClassNoticeState extends State<ClassNotice> {
                     itemCount: notice.length,
                     itemBuilder: (context, index) {
                       return NoticeCard(
-                        title: notice[0]['notice_class']['title'],
-                        date: notice[0]['notice_class']['created_at'],
-                        file: notice[0]['notice_class']['file_full_path'],
+                        title: notice[index]['notice_class']['title'],
+                        date: notice[index]['notice_class']['created_at'],
+                        file: notice[index]['notice_class']['file_full_path'],
                       );
                       // return Text("hello");
                     })

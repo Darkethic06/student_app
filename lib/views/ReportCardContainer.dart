@@ -64,7 +64,7 @@ class ReportCardContainer extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          examClass,
+                          "Class:" + examClass,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -90,29 +90,6 @@ class ReportCardContainer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // SizedBox(
-                //     width: MediaQuery.of(context).size.width / 2,
-                //     height: 50,
-                //     child: ElevatedButton(
-                //       onPressed: () {
-                //         Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (context) =>
-                //                   ViewSyllabusPdf(pdfLink: file)),
-                //         );
-                //       },
-                //       child: Text(
-                //         "View",
-                //         style: TextStyle(fontSize: 20),
-                //       ),
-                //       style: ElevatedButton.styleFrom(
-                //         backgroundColor: btnColor,
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.all(Radius.zero),
-                //         ),
-                //       ),
-                //     )),
                 TextButton(
                     onPressed: () {
                       Navigator.push(

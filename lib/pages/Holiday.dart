@@ -17,6 +17,8 @@ class _HolidayPageState extends State<HolidayPage> {
   List session_list = [];
   int? dropdownvalue;
 
+  List holiday_List = [];
+
   Future<void> fetchSession() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -33,14 +35,18 @@ class _HolidayPageState extends State<HolidayPage> {
   Future<void> fetchHolidayData(int sessionId) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final uri = Uri.parse('$basePath/get-holiday-list?sessionid=$sessionId');
+    final uri =
+        Uri.parse('$basePath/get-all-holiday-list?sessionid=$sessionId');
     final headers = {'Authorization': 'Bearer $token'};
     final response = await http.get(uri, headers: headers);
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       // Handle the data as needed
-      print(data);
+      setState(() {
+        holiday_List = data['data'];
+      });
+      print(holiday_List);
     } else {
       // Handle the error as needed
       print('Error: ${response.reasonPhrase}');
@@ -110,6 +116,79 @@ class _HolidayPageState extends State<HolidayPage> {
               ),
             ),
           ),
+          Expanded(
+            child: ListView(
+              children: holiday_List.isEmpty
+                  ? [
+                      Container(
+                        // color: Colors.yellow,
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Text(
+                            'Please select a session',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ]
+                  : holiday_List.map((item) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width - 60,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  blurRadius: 10.0,
+                                  spreadRadius: 4.0,
+                                  offset: Offset(5.0, 5.0),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 16.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: Text(
+                                      item['title'],
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.calendar_today),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Text(
+                                          item['date'],
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+            ),
+          )
         ],
       ),
     );

@@ -33,8 +33,8 @@ class _SyllabusPageState extends State<SyllabusPage> {
       // print(value.body);
       setState(() {
         data = result['data'];
+        print(data);
       });
-      print(data);
     });
   }
 
@@ -60,104 +60,145 @@ class _SyllabusPageState extends State<SyllabusPage> {
       body: SafeArea(
         child: data != null && data.isNotEmpty
             ? buildContent()
-            : data == null
-                ? Center(child: Text("No Syllabus Found"))
-                : Center(child: CircularProgressIndicator()),
+            : Center(child: CircularProgressIndicator()),
       ),
     );
   }
 
   Widget buildContent() {
-    return Container(
-      height: 230,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.white,
-            width: 1.0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      child: Container(
+        height: 150,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.white,
+              width: 1.0,
+            ),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              blurRadius: 10.0,
+              spreadRadius: 4.0,
+              offset: Offset(5.0, 5.0),
+            ),
+          ],
+          color: Colors.white,
         ),
-        color: Colors.black.withOpacity(0.05),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              data['title'],
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                data[0]['title'],
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
-            child: Text(
-              "Updated On: " +
-                  DateFormat('d/M/yyyy h:mm a')
-                      .format(DateTime.parse(data['created_at'])),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
+              child: Text(
+                "Updated On: " +
+                    DateFormat('d/M/yyyy h:mm a')
+                        .format(DateTime.parse(data[0]['created_at'])),
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ViewSyllabusPdf(pdfLink: data['file_full_path'])),
-                    );
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: Column(
-                      children: [
-                        Icon(
-                          Boxicons.bx_show,
-                          size: 30,
-                          color: btnColor,
-                        ),
-                        Text(
-                          "view",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    print("donwload");
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: Column(
-                      children: [
-                        Icon(
-                          Boxicons.bx_download,
-                          size: 30,
-                          color: btnColor,
-                        ),
-                        Text(
-                          "Download",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => ViewSyllabusPdf(
+                  //               pdfLink: data[0]['file_full_path'])),
+                  //     );
+                  //   },
+                  //   child: Container(
+                  //     width: MediaQuery.of(context).size.width / 3,
+                  //     child: Column(
+                  //       children: [
+                  //         Icon(
+                  //           Boxicons.bx_show,
+                  //           size: 30,
+                  //           color: btnColor,
+                  //         ),
+                  //         Text(
+                  //           "view",
+                  //           style: TextStyle(fontSize: 16),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewSyllabusPdf(
+                                  pdfLink: data[0]['file_full_path'])),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Text("View"),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Icon(Icons.visibility),
+                          )
+                        ],
+                      )),
+
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     print("donwload");
+                  //   },
+                  //   child: Container(
+                  //     width: MediaQuery.of(context).size.width / 3,
+                  //     child: Column(
+                  //       children: [
+                  //         Icon(
+                  //           Boxicons.bx_download,
+                  //           size: 30,
+                  //           color: btnColor,
+                  //         ),
+                  //         Text(
+                  //           "Download",
+                  //           style: TextStyle(fontSize: 16),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          Text("Download"),
+                          Icon(Icons.arrow_downward)
+                        ],
+                      ))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
