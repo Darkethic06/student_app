@@ -25,7 +25,8 @@ class _ClassNoticeState extends State<ClassNotice> {
       Map result = jsonDecode(value.body);
       setState(() {
         notice = result['data'];
-        print(notice);
+        // print("ass");
+        // print(notice);
       });
     });
   }
@@ -41,7 +42,7 @@ class _ClassNoticeState extends State<ClassNotice> {
     return Scaffold(
         body: notice.isEmpty
             ? Center(
-                child: CircularProgressIndicator(),
+                child: Text("No Notice Found"),
               )
             : notice.length > 0
                 ? ListView.builder(
@@ -55,7 +56,7 @@ class _ClassNoticeState extends State<ClassNotice> {
                       // return Text("hello");
                     })
                 : Center(
-                    child: Text("No Notice Found"),
+                    child: CircularProgressIndicator(),
                   ));
   }
 }

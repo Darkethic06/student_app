@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/utils/api.dart';
 import 'package:studentapp/utils/myColors.dart';
@@ -16,7 +17,7 @@ class HolidayPage extends StatefulWidget {
 class _HolidayPageState extends State<HolidayPage> {
   List session_list = [];
   int? dropdownvalue;
-
+  bool is_data = true;
   List holiday_List = [];
 
   Future<void> fetchSession() async {
@@ -49,6 +50,9 @@ class _HolidayPageState extends State<HolidayPage> {
       print(holiday_List);
     } else {
       // Handle the error as needed
+      setState(() {
+        is_data = false;
+      });
       print('Error: ${response.reasonPhrase}');
     }
   }
@@ -97,13 +101,20 @@ class _HolidayPageState extends State<HolidayPage> {
                   style: TextStyle(color: Colors.black),
                   value: dropdownvalue,
                   hint: Text("Select Session",
-                      style: TextStyle(color: Colors.black, fontSize: 18)),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
                   icon: const Icon(Icons.keyboard_arrow_down,
                       color: Colors.black),
                   items: session_list.map<DropdownMenuItem<int>>((items) {
                     return DropdownMenuItem<int>(
                       value: items['id'],
-                      child: Text(items['session_name']),
+                      child: Text(
+                        items['session_name'],
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
                     );
                   }).toList(),
                   onChanged: (int? value) {
@@ -124,11 +135,12 @@ class _HolidayPageState extends State<HolidayPage> {
                         // color: Colors.yellow,
                         padding: const EdgeInsets.all(16.0),
                         child: Center(
-                          child: Text(
-                            'Please select a session',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
+                            child: is_data
+                                ? Text(
+                                    'Please Select a Session',
+                                    style: TextStyle(color: Colors.black),
+                                  )
+                                : Text("No data found")),
                       ),
                     ]
                   : holiday_List.map((item) {
@@ -167,15 +179,16 @@ class _HolidayPageState extends State<HolidayPage> {
                                   ),
                                   Row(
                                     children: [
-                                      const Icon(Icons.calendar_today),
+                                      const Icon(Boxicons.bx_calendar),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8.0),
                                         child: Text(
-                                          item['date'],
+                                          item['from_date'],
+                                          // "he",
                                           style: TextStyle(
                                               fontSize: 15.0,
-                                              fontWeight: FontWeight.w500),
+                                              fontWeight: FontWeight.w400),
                                         ),
                                       ),
                                     ],

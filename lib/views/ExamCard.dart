@@ -77,7 +77,7 @@ class ExamCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          "Exam Date:" +
+                          "Exam Date: " +
                               DateFormat('d/M/yyyy')
                                   .format(DateTime.parse(examDate)),
                           style: TextStyle(
@@ -88,7 +88,12 @@ class ExamCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Exam Time:" + startTime + "-" + endTime,
+                        "Exam Time: " +
+                            DateFormat("h:mm a").format(
+                                DateFormat("HH:mm:ss").parse(startTime)) +
+                            " - " +
+                            DateFormat("h:mm a")
+                                .format(DateFormat("HH:mm:ss").parse(endTime)),
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w500,

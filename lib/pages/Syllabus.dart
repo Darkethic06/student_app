@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/ViewSyllabusPdf.dart';
 import 'package:studentapp/utils/api.dart';
@@ -21,7 +20,7 @@ class _SyllabusPageState extends State<SyllabusPage> {
   DateTime now = DateTime.now();
   DateFormat formatter = DateFormat('MM/dd/yyyy hh:mm a');
 
-  var data = null;
+  var data = [];
 
   fetchSyllabus() async {
     final prefs = await SharedPreferences.getInstance();
@@ -30,17 +29,15 @@ class _SyllabusPageState extends State<SyllabusPage> {
     final headers = {'Authorization': 'Bearer $token'};
     await http.get(uri, headers: headers).then((value) {
       Map result = jsonDecode(value.body);
-      // print(value.body);
       setState(() {
         data = result['data'];
-        print(data);
+        // print(data);
       });
     });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchSyllabus();
   }
@@ -58,7 +55,7 @@ class _SyllabusPageState extends State<SyllabusPage> {
         backgroundColor: mainColor,
       ),
       body: SafeArea(
-        child: data != null && data.isNotEmpty
+        child: data.isNotEmpty
             ? buildContent()
             : Center(child: CircularProgressIndicator()),
       ),
@@ -66,8 +63,18 @@ class _SyllabusPageState extends State<SyllabusPage> {
   }
 
   Widget buildContent() {
-    return Padding(
+    return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return buildSyllabusItem(data[index]);
+      },
+    );
+  }
+
+  Widget buildSyllabusItem(Map<String, dynamic> syllabus) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
       child: Container(
         height: 150,
         width: MediaQuery.of(context).size.width,
@@ -94,7 +101,7 @@ class _SyllabusPageState extends State<SyllabusPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                data[0]['title'],
+                syllabus['title'],
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 18,
@@ -107,7 +114,7 @@ class _SyllabusPageState extends State<SyllabusPage> {
               child: Text(
                 "Updated On: " +
                     DateFormat('d/M/yyyy h:mm a')
-                        .format(DateTime.parse(data[0]['created_at'])),
+                        .format(DateTime.parse(syllabus['created_at'])),
                 style: TextStyle(
                     fontSize: 15,
                     color: Colors.black,
@@ -119,79 +126,41 @@ class _SyllabusPageState extends State<SyllabusPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => ViewSyllabusPdf(
-                  //               pdfLink: data[0]['file_full_path'])),
-                  //     );
-                  //   },
-                  //   child: Container(
-                  //     width: MediaQuery.of(context).size.width / 3,
-                  //     child: Column(
-                  //       children: [
-                  //         Icon(
-                  //           Boxicons.bx_show,
-                  //           size: 30,
-                  //           color: btnColor,
-                  //         ),
-                  //         Text(
-                  //           "view",
-                  //           style: TextStyle(fontSize: 16),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-
                   TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ViewSyllabusPdf(
-                                  pdfLink: data[0]['file_full_path'])),
+                                  pdfLink: syllabus['file_full_path'])),
                         );
                       },
                       child: Row(
                         children: [
-                          Text("View"),
+                          Text(
+                            "View",
+                            style: TextStyle(color: Color(0xff7c96ae)),
+                          ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Icon(Icons.visibility),
+                            child: Icon(
+                              Icons.visibility,
+                              color: Color(0xff7c96ae),
+                            ),
                           )
                         ],
                       )),
-
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     print("donwload");
-                  //   },
-                  //   child: Container(
-                  //     width: MediaQuery.of(context).size.width / 3,
-                  //     child: Column(
-                  //       children: [
-                  //         Icon(
-                  //           Boxicons.bx_download,
-                  //           size: 30,
-                  //           color: btnColor,
-                  //         ),
-                  //         Text(
-                  //           "Download",
-                  //           style: TextStyle(fontSize: 16),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // Implement download functionality here
+                      },
                       child: Row(
                         children: [
-                          Text("Download"),
-                          Icon(Icons.arrow_downward)
+                          Text(
+                            "Download",
+                            style: TextStyle(color: Color(0xff7c96ae)),
+                          ),
+                          Icon(Icons.arrow_downward, color: Color(0xff7c96ae))
                         ],
                       ))
                 ],

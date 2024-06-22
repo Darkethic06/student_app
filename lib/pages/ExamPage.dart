@@ -26,7 +26,7 @@ class _ExamPageState extends State<ExamPage> {
       Map result = jsonDecode(value.body);
       setState(() {
         exams = result['data'];
-        print(exams);
+        // print(exams);
       });
     });
   }
@@ -58,7 +58,7 @@ class _ExamPageState extends State<ExamPage> {
                     itemCount: exams.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15),
+                          padding: EdgeInsets.symmetric(vertical: 1),
                           child: ExamCard(
                             title: exams[index]['name'],
                             subject: exams[index]['subject']['title'],
