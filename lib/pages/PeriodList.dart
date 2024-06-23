@@ -89,13 +89,20 @@ class _PeriodListState extends State<PeriodList> {
                     style: TextStyle(color: Colors.black),
                     value: dropdownvalue,
                     hint: Text("Select Day",
-                        style: TextStyle(color: Colors.black, fontSize: 18)),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600)),
                     icon: const Icon(Icons.keyboard_arrow_down,
                         color: Colors.black),
                     items: day_list.map<DropdownMenuItem<String>>((items) {
                       return DropdownMenuItem<String>(
                         value: items,
-                        child: Text(items),
+                        child: Text(items,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600)),
                       );
                     }).toList(),
                     onChanged: (String? value) {
@@ -139,7 +146,7 @@ class _PeriodListState extends State<PeriodList> {
                             'Please select a Day',
                             textAlign: TextAlign.center,
                           )),
-                          DataCell(Text('')), // Empty cell for alignment
+                          DataCell(Text('')),
                         ]),
                       ]
                     : holiday_data.map<DataRow>((item) {

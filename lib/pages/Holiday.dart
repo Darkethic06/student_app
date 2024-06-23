@@ -18,6 +18,7 @@ class _HolidayPageState extends State<HolidayPage> {
   List session_list = [];
   int? dropdownvalue;
   bool is_data = true;
+  String? monthValue;
   List holiday_List = [];
 
   Future<void> fetchSession() async {
@@ -56,6 +57,21 @@ class _HolidayPageState extends State<HolidayPage> {
       print('Error: ${response.reasonPhrase}');
     }
   }
+
+  List month_list = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
 
   @override
   void initState() {
@@ -127,6 +143,56 @@ class _HolidayPageState extends State<HolidayPage> {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 70,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 10.0,
+                    spreadRadius: 4.0,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                  isExpanded: true,
+                  style: TextStyle(color: Colors.black),
+                  value: monthValue,
+                  hint: Text("Select Month",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
+                  icon: const Icon(Icons.keyboard_arrow_down,
+                      color: Colors.black),
+                  items: month_list.map<DropdownMenuItem<String>>((items) {
+                    return DropdownMenuItem<String>(
+                      value: items,
+                      child: Text(
+                        items,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? month) {
+                    setState(() {
+                      monthValue = month!;
+                      // fetchHolidayData(dropdownvalue!, monthValue!);
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: ListView(
               children: holiday_List.isEmpty
@@ -178,19 +244,37 @@ class _HolidayPageState extends State<HolidayPage> {
                                     ),
                                   ),
                                   Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Icon(Boxicons.bx_calendar),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text(
-                                          item['from_date'],
-                                          // "he",
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400),
+                                      Row(children: [
+                                        const Icon(Boxicons.bx_calendar),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text(
+                                            item['from_date'],
+                                            // "he",
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      ),
+                                      ]),
+                                      Row(children: [
+                                        const Icon(Boxicons.bx_calendar),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text(
+                                            item['to_date'] ?? item['to_date'],
+                                            // "he",
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        ),
+                                      ])
                                     ],
                                   )
                                 ],

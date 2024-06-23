@@ -25,6 +25,7 @@ class _GalleryPageState extends State<GalleryPage> {
       Map result = jsonDecode(value.body);
       setState(() {
         photos = result['data'];
+        print(photos);
       });
     });
   }

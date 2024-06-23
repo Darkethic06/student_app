@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studentapp/utils/myColors.dart';
 import 'package:intl/intl.dart';
 
 class ExamCard extends StatelessWidget {
