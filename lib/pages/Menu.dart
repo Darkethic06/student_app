@@ -7,6 +7,7 @@ import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Assignments.dart';
+import 'package:studentapp/pages/Attendance.dart';
 import 'package:studentapp/pages/Classmate.dart';
 import 'package:studentapp/pages/ExamPage.dart';
 import 'package:studentapp/pages/Gallery.dart';
@@ -93,7 +94,13 @@ class _MenuPageState extends State<MenuPage> {
                                 fontWeight: FontWeight.w600),
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AttendancePage()));
+                              },
                               icon: Icon(
                                 Boxicons.bxs_chevron_right,
                                 color: mainColor,
@@ -153,6 +160,10 @@ class _MenuPageState extends State<MenuPage> {
                           ),
                         ),
                         GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => AttendancePage()));
+                          },
                           child: FeatureCard(
                             name: "Attendance",
                             featureIcon: Icons.school_rounded,

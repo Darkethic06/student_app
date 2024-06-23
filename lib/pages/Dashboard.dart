@@ -46,6 +46,8 @@ class _DashboardState extends State<Dashboard> {
   String fathers_name = '';
   String mothers_name = '';
   String imageUrl = '';
+  String student_class = "";
+  String student_section = "";
 
   Future<void> fetchProfile() async {
     final prefs = await SharedPreferences.getInstance();
@@ -55,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
     final response = await http.get(uri, headers: headers);
 
     final data = jsonDecode(response.body);
-    // print(data);
+    // print();
     setState(() {
       name = data['data']['full_name'];
       studentCode = data['data']['student_code'];
@@ -63,6 +65,9 @@ class _DashboardState extends State<Dashboard> {
       fathers_name = data['data']['fathers_name'];
       mothers_name = data['data']['mothers_name'];
       imageUrl = data['data']['profile_photo_url'];
+      student_class = data['data']['studentassignclass'][0]['stclass']['class'];
+      student_section =
+          data['data']['studentassignclass'][0]['stclass']['section'];
     });
   }
 
@@ -126,7 +131,7 @@ class _DashboardState extends State<Dashboard> {
                                     Colors.white), // Adjust font size as needed
                           ),
                           Text(
-                            "Additional Text",
+                            "Class: $student_class - $student_section",
                             style: TextStyle(
                                 fontSize: 14.0,
                                 color:
@@ -347,7 +352,7 @@ class _DashboardState extends State<Dashboard> {
               onTap: () async {
                 final prefs = await SharedPreferences.getInstance();
                 prefs.clear();
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),
