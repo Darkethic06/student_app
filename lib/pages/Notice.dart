@@ -62,7 +62,7 @@ class _NoticePageState extends State<NoticePage> {
   Widget buildButton(String text, int index) {
     return Container(
       height: 40,
-      width: MediaQuery.of(context).size.width / 3,
+      width: (MediaQuery.of(context).size.width / 2) - 20,
       decoration: BoxDecoration(
         color: _selectedIndex == index ? mainColor : Colors.white,
         borderRadius: BorderRadius.circular(0.0),
@@ -83,7 +83,7 @@ class _NoticePageState extends State<NoticePage> {
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 15,
             color: _selectedIndex == index ? Colors.white : mainColor,
           ),
         ),

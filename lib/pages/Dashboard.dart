@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/Assignments.dart';
+import 'package:studentapp/pages/Attendance.dart';
 import 'package:studentapp/pages/Classmate.dart';
 import 'package:studentapp/pages/ExamPage.dart';
 import 'package:studentapp/pages/Fee.dart';
@@ -165,7 +166,10 @@ class _DashboardState extends State<Dashboard> {
                       fontWeight: FontWeight.w700)), // Close drawer on tap
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AttendancePage()));
+              },
               leading: Container(
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(

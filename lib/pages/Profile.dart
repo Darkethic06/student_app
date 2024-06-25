@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final response = await http.get(uri, headers: headers);
 
     final data = jsonDecode(response.body);
-    print(data);
+    // print(data);
     setState(() {
       name = data['data']['full_name'];
       studentCode = data['data']['student_code'];
@@ -39,9 +39,12 @@ class _ProfilePageState extends State<ProfilePage> {
       email = data['data']['email'];
       fathers_name = data['data']['fathers_name'];
       mothers_name = data['data']['mothers_name'];
-      imageUrl = data['data']['profile_photo_url'];
+      imageUrl = data['data']['profile_photo_path'] != null
+          ? data['data']['profile_photo_url']
+          : '${assetPath}admin_assets/demo.png';
       dob = data['data']['dob'];
     });
+    // print(imageUrl);
   }
 
   @override

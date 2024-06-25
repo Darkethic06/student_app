@@ -83,65 +83,108 @@ class _AttendancePageState extends State<AttendancePage> {
         centerTitle: true,
         backgroundColor: mainColor,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 10.0,
-                    spreadRadius: 4.0,
-                    offset: Offset(5.0, 5.0),
-                  ),
-                ],
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-                  isExpanded: true,
-                  style: TextStyle(color: Colors.black),
-                  value: dropdownvalue,
-                  hint: Text("Select Session",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600)),
-                  icon: const Icon(Icons.keyboard_arrow_down,
-                      color: Colors.black),
-                  items: session_list.map<DropdownMenuItem<int>>((items) {
-                    return DropdownMenuItem<int>(
-                      value: items['id'],
-                      child: Text(
-                        items['session_name'],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      blurRadius: 10.0,
+                      spreadRadius: 4.0,
+                      offset: Offset(5.0, 5.0),
+                    ),
+                  ],
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+                    isExpanded: true,
+                    style: TextStyle(color: Colors.black),
+                    value: dropdownvalue,
+                    hint: Text("Select Session",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (int? value) {
-                    setState(() {
-                      dropdownvalue = value!;
-                      // print(dropdownvalue);
-                      fetchAttendanceData(dropdownvalue!);
-                    });
-                  },
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600)),
+                    icon: const Icon(Icons.keyboard_arrow_down,
+                        color: Colors.black),
+                    items: session_list.map<DropdownMenuItem<int>>((items) {
+                      return DropdownMenuItem<int>(
+                        value: items['id'],
+                        child: Text(
+                          items['session_name'],
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (int? value) {
+                      setState(() {
+                        dropdownvalue = value!;
+                        // print(dropdownvalue);
+                        fetchAttendanceData(dropdownvalue!);
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-          is_data
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 15),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 120,
+            is_data
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 15),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 120,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            blurRadius: 10.0,
+                            spreadRadius: 4.0,
+                            offset: Offset(5.0, 5.0),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Total Class Held: $totalClass",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              "Total Class Attended: $totalAttend",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              "Attendance Percentage: $totalPercentage%",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
+            is_data
+                ? Container(
+                    // width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -153,76 +196,36 @@ class _AttendancePageState extends State<AttendancePage> {
                         ),
                       ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Total Class Held: $totalClass",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            "Total Class Attended: $totalAttend",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            "Attendance Percentage: $totalPercentage%",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          )
-                        ],
+                    child: Expanded(
+                      child: SingleChildScrollView(
+                        // scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          columns: const [
+                            DataColumn(label: Text('Month')),
+                            DataColumn(label: Text('Classes Held')),
+                            DataColumn(label: Text('Classes Present')),
+                          ],
+                          rows: attendanceData.entries.map((entry) {
+                            return DataRow(cells: [
+                              DataCell(
+                                  Text(entry.key, textAlign: TextAlign.center)),
+                              DataCell(Text(
+                                entry.value['held'].toString(),
+                                textAlign: TextAlign.center,
+                              )),
+                              DataCell(Text(entry.value['present'].toString(),
+                                  textAlign: TextAlign.center)),
+                            ]);
+                          }).toList(),
+                        ),
                       ),
                     ),
+                  )
+                : Center(
+                    child: Text("No attendance data available."),
                   ),
-                )
-              : Container(),
-          is_data
-              ? Container(
-                  // width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        blurRadius: 10.0,
-                        spreadRadius: 4.0,
-                        offset: Offset(5.0, 5.0),
-                      ),
-                    ],
-                  ),
-                  child: Expanded(
-                    child: SingleChildScrollView(
-                      // scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('Month')),
-                          DataColumn(label: Text('Classes Held')),
-                          DataColumn(label: Text('Classes Present')),
-                        ],
-                        rows: attendanceData.entries.map((entry) {
-                          return DataRow(cells: [
-                            DataCell(
-                                Text(entry.key, textAlign: TextAlign.center)),
-                            DataCell(Text(
-                              entry.value['held'].toString(),
-                              textAlign: TextAlign.center,
-                            )),
-                            DataCell(Text(entry.value['present'].toString(),
-                                textAlign: TextAlign.center)),
-                          ]);
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                )
-              : Center(
-                  child: Text("No attendance data available."),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }

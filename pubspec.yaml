@@ -43,6 +43,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^25.1.42
   percent_indicator: ^4.2.3
   boxicons: ^2.1.3
+  flutter_file_downloader: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

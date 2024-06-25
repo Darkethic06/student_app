@@ -81,7 +81,7 @@ class AssignmentCard extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.black,
-                                fontWeight: FontWeight.w600),
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
                         Text(
@@ -91,7 +91,7 @@ class AssignmentCard extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w400),
                         ),
                         Text(
                           "Updated by" +
@@ -100,7 +100,7 @@ class AssignmentCard extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w400),
                         )
                       ],
                     ),

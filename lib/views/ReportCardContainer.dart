@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:intl/intl.dart';
 import 'package:studentapp/pages/ViewSyllabusPdf.dart';
 import 'package:studentapp/utils/myColors.dart';
@@ -20,13 +21,20 @@ class ReportCardContainer extends StatelessWidget {
   DateFormat formatter = DateFormat('MM/dd/yyyy hh:mm a');
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+    return 
+
+    Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
       child: Container(
+        height: 170,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 5,
         decoration: BoxDecoration(
-          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.white,
+              width: 1.0,
+            ),
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -35,36 +43,26 @@ class ReportCardContainer extends StatelessWidget {
               offset: Offset(5.0, 5.0),
             ),
           ],
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.white,
-              width: 1.0,
-            ),
-          ),
-          // color: Colors.black.withOpacity(0.05),
+          color: Colors.white,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.s,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:8.0),
                         child: Text(
-                          "Class:" + examClass,
+                          "Class: " + examClass,
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -72,48 +70,61 @@ class ReportCardContainer extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        "Updated On: " +
-                            DateFormat('d/M/yyyy h:mm a')
-                                .format(DateTime.parse(published)),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                        ),
-                      )
-                    ],
-                  )),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
+              child: Text(
+                "Updated On: " +
+                    DateFormat('d/M/yyyy h:mm a')
+                        .format(DateTime.parse(published)),
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ViewSyllabusPdf(pdfLink: file)),
-                      );
-                    },
-                    child: Row(
-                      children: [
-                        Text("View"),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Icon(Icons.visibility),
-                        )
-                      ],
-                    )),
-                TextButton(
-                    onPressed: () {},
-                    child: Row(
-                      children: [Text("Download"), Icon(Icons.arrow_downward)],
-                    ))
-              ],
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewSyllabusPdf(
+                                  pdfLink: file)),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            "View",
+                            style: TextStyle(color: Color(0xff7c96ae)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Icon(
+                              Icons.visibility,
+                              color: Color(0xff7c96ae),
+                            ),
+                          )
+                        ],
+                      )),
+                  TextButton(
+                      onPressed: () {
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            "Download",
+                            style: TextStyle(color: Color(0xff7c96ae)),
+                          ),
+                          Icon(Icons.arrow_downward, color: Color(0xff7c96ae))
+                        ],
+                      ))
+                ],
+              ),
             )
           ],
         ),

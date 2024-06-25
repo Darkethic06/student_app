@@ -60,7 +60,9 @@ class _AllTeacherState extends State<AllTeacher> {
           itemBuilder: ((context, index) {
             return ClassmateCard(
               name: teachers[index]['full_name'],
-              image: teachers[index]['profile_photo_url'],
+              image: teachers[index]['profile_photo_path'] != null
+                  ? teachers[index]["profile_photo_url"]
+                  : '${assetPath}admin_assets/demo.png',
             );
           }),
         ),

@@ -44,77 +44,34 @@ class _ReportCardPageState extends State<ReportCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 5,
-        child: Scaffold(
-            appBar: AppBar(
-              iconTheme: IconThemeData(color: Colors.white),
-              title: Text(
-                "Report Card",
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: mainColor,
-              centerTitle: true,
-              // bottom: TabBar(
-              //     isScrollable: true,
-              //     labelColor: Colors.white,
-              //     unselectedLabelColor: btnColor,
-              //     indicatorColor: btnColor,
-              //     tabs: <Widget>[
-              //       Tab(
-              //         child: Text(
-              //           "KG-C\n2020-2021",
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ),
-              //       Tab(
-              //         child: Text(
-              //           "KG-C\n2020-2021",
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ),
-              //       Tab(
-              //         child: Text(
-              //           "KG-C\n2020-2021",
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ),
-              //       Tab(
-              //         child: Text(
-              //           "KG-C\n2020-2021",
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ),
-              //       Tab(
-              //         child: Text(
-              //           "KG-C\n2020-2021",
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ),
-              //     ]),
-            ),
-            // body: TabBarView(
-            //   children: [
-            //     ReportCardContainer(),
-            //     ReportCardContainer(),
-            //     ReportCardContainer(),
-            //     ReportCardContainer(),
-            //     ReportCardContainer(),
-            //   ],
-            // )
-            body: reportCards.isEmpty
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : reportCards.isNotEmpty
-                    ? ReportCardContainer(
-                        title: reportCards[0]['exam']['name'],
-                        examClass: reportCards[0]['class']['class'],
-                        published: reportCards[0]['created_at'],
-                        file: reportCards[0]['file_full_path'],
-                      )
-                    : Center(
-                        child: Text("No Notice Found"),
-                      )));
+    return Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          title: Text(
+            "Report Card",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: mainColor,
+          centerTitle: true,
+        ),
+        body: reportCards.isEmpty
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : reportCards.isNotEmpty
+                ? ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                    itemCount: reportCards.length,
+                    itemBuilder: (context, index) {
+                      return ReportCardContainer(
+                        title: reportCards[index]['exam']['name'],
+                        examClass: reportCards[index]['class']['class'],
+                        published: reportCards[index]['created_at'],
+                        file: reportCards[index]['file_full_path'],
+                      );
+                    })
+                : Center(
+                    child: Text("No Notice Found"),
+                  ));
   }
 }

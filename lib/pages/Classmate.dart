@@ -26,7 +26,7 @@ class _ClassmatePageState extends State<ClassmatePage> {
       Map result = jsonDecode(value.body);
       setState(() {
         students = result['data'];
-        print(students);
+        print(students[2]);
       });
     });
   }
@@ -69,8 +69,9 @@ class _ClassmatePageState extends State<ClassmatePage> {
               itemBuilder: ((context, index) {
                 final student = students[index];
                 final name = student['student']["full_name"] ?? 'No Name';
-                final image = student['student']["profile_photo_path"] ??
-                    '${assetPath}admin_assets/demo.png';
+                final image = student['student']["profile_photo_path"] != null
+                    ? student['student']["profile_photo_url"]
+                    : '${assetPath}admin_assets/demo.png';
                 return ClassmateCard(
                   name: name,
                   image: image,
