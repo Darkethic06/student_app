@@ -60,7 +60,8 @@ class _ReportCardPageState extends State<ReportCardPage> {
               )
             : reportCards.isNotEmpty
                 ? ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
                     itemCount: reportCards.length,
                     itemBuilder: (context, index) {
                       return ReportCardContainer(

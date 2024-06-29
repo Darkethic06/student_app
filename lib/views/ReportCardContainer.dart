@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 import 'package:intl/intl.dart';
 import 'package:studentapp/pages/ViewSyllabusPdf.dart';
 import 'package:studentapp/utils/myColors.dart';
 
 // ignore: must_be_immutable
-class ReportCardContainer extends StatelessWidget {
+class ReportCardContainer extends StatefulWidget {
   final String title;
   final String examClass;
   final String published;
@@ -17,8 +18,17 @@ class ReportCardContainer extends StatelessWidget {
       required this.examClass,
       required this.published,
       required this.file});
+
+  @override
+  State<ReportCardContainer> createState() => _ReportCardContainerState();
+}
+
+class _ReportCardContainerState extends State<ReportCardContainer> {
+  final _flutterMediaDownloaderPlugin = MediaDownload();
   DateTime now = DateTime.now();
+
   DateFormat formatter = DateFormat('MM/dd/yyyy hh:mm a');
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,7 +59,7 @@ class ReportCardContainer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                title,
+                widget.title,
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 18,
@@ -60,7 +70,7 @@ class ReportCardContainer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                "Class: " + examClass,
+                "Class: " + widget.examClass,
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
@@ -73,7 +83,7 @@ class ReportCardContainer extends StatelessWidget {
               child: Text(
                 "Updated On: " +
                     DateFormat('d/M/yyyy h:mm a')
-                        .format(DateTime.parse(published)),
+                        .format(DateTime.parse(widget.published)),
                 style: TextStyle(
                     fontSize: 15,
                     color: Colors.black,
@@ -91,7 +101,7 @@ class ReportCardContainer extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ViewSyllabusPdf(pdfLink: file)),
+                                  ViewSyllabusPdf(pdfLink: widget.file)),
                         );
                       },
                       child: Row(
@@ -110,8 +120,9 @@ class ReportCardContainer extends StatelessWidget {
                         ],
                       )),
                   TextButton(
-                      onPressed: () {
-                        FileDownloader.downloadFile(url: file);
+                      onPressed: () async {
+                        _flutterMediaDownloaderPlugin.downloadMedia(
+                            context, widget.file);
                       },
                       child: Row(
                         children: [

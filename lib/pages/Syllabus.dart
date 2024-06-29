@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/ViewSyllabusPdf.dart';
 import 'package:studentapp/utils/api.dart';
@@ -21,7 +22,7 @@ class SyllabusPage extends StatefulWidget {
 class _SyllabusPageState extends State<SyllabusPage> {
   DateTime now = DateTime.now();
   DateFormat formatter = DateFormat('MM/dd/yyyy hh:mm a');
-
+  final _flutterMediaDownloaderPlugin = MediaDownload();
   var data = [];
 
   fetchSyllabus() async {
@@ -152,9 +153,9 @@ class _SyllabusPageState extends State<SyllabusPage> {
                         ],
                       )),
                   TextButton(
-                      onPressed: () {
-                        FileDownloader.downloadFile(
-                            url: syllabus['file_full_path']);
+                      onPressed: () async {
+                        _flutterMediaDownloaderPlugin.downloadMedia(
+                            context, syllabus['file_full_path']);
                       },
                       child: Row(
                         children: [
