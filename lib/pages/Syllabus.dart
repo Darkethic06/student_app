@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_boxicons/flutter_boxicons.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/pages/ViewSyllabusPdf.dart';
 import 'package:studentapp/utils/api.dart';
@@ -31,7 +33,6 @@ class _SyllabusPageState extends State<SyllabusPage> {
       Map result = jsonDecode(value.body);
       setState(() {
         data = result['data'];
-        // print(data);
       });
     });
   }
@@ -139,28 +140,33 @@ class _SyllabusPageState extends State<SyllabusPage> {
                         children: [
                           Text(
                             "View",
-                            style: TextStyle(color: Color(0xff7c96ae)),
+                            style: TextStyle(color: blueColor),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.0),
                             child: Icon(
                               Icons.visibility,
-                              color: Color(0xff7c96ae),
+                              color: blueColor,
                             ),
                           )
                         ],
                       )),
                   TextButton(
                       onPressed: () {
-                        
+                        FileDownloader.downloadFile(
+                            url: syllabus['file_full_path']);
                       },
                       child: Row(
                         children: [
                           Text(
                             "Download",
-                            style: TextStyle(color: Color(0xff7c96ae)),
+                            style: TextStyle(color: blueColor),
                           ),
-                          Icon(Icons.arrow_downward, color: Color(0xff7c96ae))
+                          // Icon(Icons.arrow_downward, color: blueColor)
+                          Icon(
+                            Boxicons.bx_download,
+                            color: blueColor,
+                          )
                         ],
                       ))
                 ],

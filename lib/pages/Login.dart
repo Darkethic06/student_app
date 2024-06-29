@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
               child: Image.asset(
-                "./login-banner.jpg",
+                "assets/login-banner.jpg",
                 fit: BoxFit.cover,
               ),
             ),

@@ -21,9 +21,7 @@ class ReportCardContainer extends StatelessWidget {
   DateFormat formatter = DateFormat('MM/dd/yyyy hh:mm a');
   @override
   Widget build(BuildContext context) {
-    return 
-
-    Padding(
+    return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Container(
         height: 170,
@@ -60,16 +58,16 @@ class ReportCardContainer extends StatelessWidget {
               ),
             ),
             Padding(
-                        padding: const EdgeInsets.symmetric(horizontal:8.0),
-                        child: Text(
-                          "Class: " + examClass,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                "Class: " + examClass,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
               child: Text(
@@ -92,35 +90,36 @@ class ReportCardContainer extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ViewSyllabusPdf(
-                                  pdfLink: file)),
+                              builder: (context) =>
+                                  ViewSyllabusPdf(pdfLink: file)),
                         );
                       },
                       child: Row(
                         children: [
                           Text(
                             "View",
-                            style: TextStyle(color: Color(0xff7c96ae)),
+                            style: TextStyle(color: blueColor),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.0),
                             child: Icon(
                               Icons.visibility,
-                              color: Color(0xff7c96ae),
+                              color: blueColor,
                             ),
                           )
                         ],
                       )),
                   TextButton(
                       onPressed: () {
+                        FileDownloader.downloadFile(url: file);
                       },
                       child: Row(
                         children: [
                           Text(
                             "Download",
-                            style: TextStyle(color: Color(0xff7c96ae)),
+                            style: TextStyle(color: blueColor),
                           ),
-                          Icon(Icons.arrow_downward, color: Color(0xff7c96ae))
+                          Icon(Icons.arrow_downward, color: blueColor)
                         ],
                       ))
                 ],

@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentapp/utils/api.dart';
 import 'package:studentapp/utils/myColors.dart';
@@ -15,53 +13,61 @@ class AttendancePage extends StatefulWidget {
 }
 
 class _AttendancePageState extends State<AttendancePage> {
-  List session_list = [];
-  int? dropdownvalue;
-  bool is_data = false;
-  // String? monthValue;
-  // List attendance_List = [];
+  List sessionList = [];
+  int? dropdownValue;
+  bool isData = false;
   String? totalClass;
   String? totalAttend;
   String? totalPercentage;
   Map<String, dynamic> attendanceData = {};
 
   Future<void> fetchSession() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final uri = Uri.parse('$basePath/get-all-sessions');
-    final headers = {'Authorization': 'Bearer $token'};
-    final response = await http.get(uri, headers: headers);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final uri = Uri.parse('$basePath/get-all-sessions');
+      final headers = {'Authorization': 'Bearer $token'};
+      final response = await http.get(uri, headers: headers);
 
-    final data = jsonDecode(response.body);
-    setState(() {
-      session_list = data['data'];
-      // print(session_list);
-    });
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          sessionList = data['data'];
+        });
+      } else {
+        throw Exception('Failed to load sessions');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   Future<void> fetchAttendanceData(int sessionId) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final uri =
-        Uri.parse('$basePath/get-user-attendance-list?sessionid=$sessionId');
-    final headers = {'Authorization': 'Bearer $token'};
-    final response = await http.get(uri, headers: headers);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final uri =
+          Uri.parse('$basePath/get-user-attendance-list?sessionid=$sessionId');
+      final headers = {'Authorization': 'Bearer $token'};
+      final response = await http.get(uri, headers: headers);
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      setState(() {
-        print(data);
-        attendanceData = data['data']['month'];
-        totalAttend = data['data']['total_present'].toString();
-        totalClass = data['data']['total_class'].toString();
-        totalPercentage = data['data']['total_percentage'].toString();
-        is_data = true;
-      });
-    } else {
-      setState(() {
-        is_data = false;
-      });
-      print('Error: ${response.reasonPhrase}');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          attendanceData = data['data']['month'];
+          totalAttend = data['data']['total_present'].toString();
+          totalClass = data['data']['total_class'].toString();
+          totalPercentage = data['data']['total_percentage'].toString();
+          isData = true;
+        });
+      } else {
+        setState(() {
+          isData = false;
+        });
+        throw Exception('Failed to load attendance data');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
@@ -75,8 +81,8 @@ class _AttendancePageState extends State<AttendancePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text(
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
           "ATTENDANCE",
           style: TextStyle(color: Colors.white),
         ),
@@ -99,51 +105,59 @@ class _AttendancePageState extends State<AttendancePage> {
                       color: Colors.grey.withOpacity(0.5),
                       blurRadius: 10.0,
                       spreadRadius: 4.0,
-                      offset: Offset(5.0, 5.0),
+                      offset: const Offset(5.0, 5.0),
                     ),
                   ],
                 ),
                 child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+                  child: DropdownButton<int>(
                     isExpanded: true,
-                    style: TextStyle(color: Colors.black),
-                    value: dropdownvalue,
-                    hint: Text("Select Session",
+                    style: const TextStyle(color: Colors.black),
+                    value: dropdownValue,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text(
+                        "Select Session",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600)),
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                     icon: const Icon(Icons.keyboard_arrow_down,
                         color: Colors.black),
-                    items: session_list.map<DropdownMenuItem<int>>((items) {
+                    items: sessionList.map<DropdownMenuItem<int>>((items) {
                       return DropdownMenuItem<int>(
                         value: items['id'],
-                        child: Text(
-                          items['session_name'],
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            items['session_name'],
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       );
                     }).toList(),
                     onChanged: (int? value) {
                       setState(() {
-                        dropdownvalue = value!;
-                        // print(dropdownvalue);
-                        fetchAttendanceData(dropdownvalue!);
+                        dropdownValue = value!;
+                        fetchAttendanceData(dropdownValue!);
                       });
                     },
                   ),
                 ),
               ),
             ),
-            is_data
+            isData
                 ? Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 15),
+                        horizontal: 15.0, vertical: 15),
                     child: Container(
-                      width: MediaQuery.of(context).size.width - 120,
+                      width: MediaQuery.of(context).size.width - 60,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -151,7 +165,7 @@ class _AttendancePageState extends State<AttendancePage> {
                             color: Colors.grey.withOpacity(0.5),
                             blurRadius: 10.0,
                             spreadRadius: 4.0,
-                            offset: Offset(5.0, 5.0),
+                            offset: const Offset(5.0, 5.0),
                           ),
                         ],
                       ),
@@ -163,42 +177,50 @@ class _AttendancePageState extends State<AttendancePage> {
                           children: [
                             Text(
                               "Total Class Held: $totalClass",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             Text(
                               "Total Class Attended: $totalAttend",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             Text(
                               "Attendance Percentage: $totalPercentage%",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
-                            )
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   )
-                : Container(),
-            is_data
-                ? Container(
-                    // width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 10.0,
-                          spreadRadius: 4.0,
-                          offset: Offset(5.0, 5.0),
-                        ),
-                      ],
-                    ),
-                    child: Expanded(
+                : const SizedBox.shrink(),
+            isData
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 15),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            blurRadius: 10.0,
+                            spreadRadius: 4.0,
+                            offset: const Offset(5.0, 5.0),
+                          ),
+                        ],
+                      ),
                       child: SingleChildScrollView(
-                        // scrollDirection: Axis.horizontal,
+                        scrollDirection: Axis.horizontal,
                         child: DataTable(
                           columns: const [
                             DataColumn(label: Text('Month')),
@@ -221,7 +243,7 @@ class _AttendancePageState extends State<AttendancePage> {
                       ),
                     ),
                   )
-                : Center(
+                : const Center(
                     child: Text("No attendance data available."),
                   ),
           ],

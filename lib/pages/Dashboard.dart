@@ -365,7 +365,7 @@ class _DashboardState extends State<Dashboard> {
       ),
       body: Center(child: pages.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: btnColor,
+        selectedItemColor: blueColor,
         unselectedItemColor: mainColor,
         type: BottomNavigationBarType.fixed,
         selectedLabelStyle: const TextStyle(
@@ -374,7 +374,7 @@ class _DashboardState extends State<Dashboard> {
         unselectedLabelStyle: TextStyle(
           color: mainColor,
         ),
-        currentIndex: _selectedIndex, //New
+        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
