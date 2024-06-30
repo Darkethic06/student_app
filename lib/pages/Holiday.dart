@@ -18,8 +18,11 @@ class _HolidayPageState extends State<HolidayPage> {
   List session_list = [];
   int? dropdownvalue;
   bool is_data = true;
-  String? monthValue;
+  int? monthValue;
   List holiday_List = [];
+  bool isMonthData = true;
+
+  int? setSessionid;
 
   Future<void> fetchSession() async {
     final prefs = await SharedPreferences.getInstance();
@@ -44,13 +47,10 @@ class _HolidayPageState extends State<HolidayPage> {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      // Handle the data as needed
       setState(() {
         holiday_List = data['data'];
       });
-      print(holiday_List);
     } else {
-      // Handle the error as needed
       setState(() {
         is_data = false;
       });
@@ -58,19 +58,47 @@ class _HolidayPageState extends State<HolidayPage> {
     }
   }
 
+  Future<void> fetchHolidayDataBasedOnMonth(int monthId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    if (setSessionid == null) {
+      return;
+    }
+    final uri = Uri.parse(
+        '$basePath/get-all-holiday-list?sessionid=$setSessionid&month=$monthId');
+    final headers = {'Authorization': 'Bearer $token'};
+    final response = await http.get(uri, headers: headers);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        holiday_List = data['data'];
+        isMonthData = true;
+      });
+    } else {
+      setState(() {
+        isMonthData = false;
+      });
+      print('Error: ${response.reasonPhrase}');
+    }
+  }
+
   List month_list = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    {"id": 1, "month": "January"},
+    {"id": 2, "month": "February"},
+    {
+      "id": 3,
+      "month": "March",
+    },
+    {"id": 4, "month": "April"},
+    {"id": 5, "month": "May"},
+    {"id": 6, "month": "June"},
+    {"id": 7, "month": "July"},
+    {"id": 8, "month": "August"},
+    {"id": 9, "month": "September"},
+    {"id": 10, "month": "October"},
+    {"id": 11, "month": "November"},
+    {"id": 12, "month": "December"}
   ];
 
   @override
@@ -136,6 +164,7 @@ class _HolidayPageState extends State<HolidayPage> {
                   onChanged: (int? value) {
                     setState(() {
                       dropdownvalue = value!;
+                      setSessionid = value;
                       fetchHolidayData(dropdownvalue!);
                     });
                   },
@@ -173,20 +202,20 @@ class _HolidayPageState extends State<HolidayPage> {
                           fontWeight: FontWeight.w600)),
                   icon: const Icon(Icons.keyboard_arrow_down,
                       color: Colors.black),
-                  items: month_list.map<DropdownMenuItem<String>>((items) {
-                    return DropdownMenuItem<String>(
-                      value: items,
+                  items: month_list.map<DropdownMenuItem<int>>((items) {
+                    return DropdownMenuItem<int>(
+                      value: items['id'],
                       child: Text(
-                        items,
+                        items['month'],
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                     );
                   }).toList(),
-                  onChanged: (String? month) {
+                  onChanged: (int? monthId) {
                     setState(() {
-                      monthValue = month!;
-                      // fetchHolidayData(dropdownvalue!, monthValue!);
+                      monthValue = monthId!;
+                      fetchHolidayDataBasedOnMonth(monthValue!);
                     });
                   },
                 ),
@@ -198,7 +227,6 @@ class _HolidayPageState extends State<HolidayPage> {
               children: holiday_List.isEmpty
                   ? [
                       Container(
-                        // color: Colors.yellow,
                         padding: const EdgeInsets.all(16.0),
                         child: Center(
                             child: is_data
@@ -261,20 +289,26 @@ class _HolidayPageState extends State<HolidayPage> {
                                           ),
                                         ),
                                       ]),
-                                      Row(children: [
-                                        const Icon(Boxicons.bx_calendar),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8.0),
-                                          child: Text(
-                                            item['to_date'] ?? item['to_date'],
-                                            // "he",
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ),
-                                      ])
+                                      item['to_date'] != null
+                                          ? Row(children: [
+                                              const Icon(Boxicons.bx_calendar),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
+                                                child: Text(
+                                                  item['to_date'] != null
+                                                      ? item['to_date']
+                                                      : '',
+                                                  // "he",
+                                                  style: TextStyle(
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ),
+                                            ])
+                                          : Text("")
                                     ],
                                   )
                                 ],
