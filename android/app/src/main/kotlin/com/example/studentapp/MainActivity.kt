@@ -1,4 +1,4 @@
-package com.example.studentapp
+package in.truepid.northpoint
 
 import io.flutter.embedding.android.FlutterActivity
 

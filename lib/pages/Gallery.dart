@@ -25,9 +25,42 @@ class _GalleryPageState extends State<GalleryPage> {
       Map result = jsonDecode(value.body);
       setState(() {
         photos = result['data'];
-        print(photos);
+        // print(photos);
       });
     });
+  }
+
+  void showImagePopup(String fullImagePath) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent, // Make background transparent
+          body: Stack(
+            children: [
+              // Image content
+              Center(
+                child: InteractiveViewer(
+                  child: Image.network(
+                    fullImagePath,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              // Close button
+              Positioned(
+                top: 20.0,
+                right: 20.0,
+                child: IconButton(
+                  icon: Icon(Icons.close, color: Colors.white),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -53,26 +86,28 @@ class _GalleryPageState extends State<GalleryPage> {
                 crossAxisSpacing: 15, crossAxisCount: 3, mainAxisSpacing: 15),
             itemCount: photos.length,
             itemBuilder: (context, index) {
-              // print(photos[index]['full_image_path']);
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      blurRadius: 10.0,
-                      spreadRadius: 4.0,
-                      offset: Offset(5.0, 5.0),
+              return GestureDetector(
+                onTap: () => showImagePopup(photos[index]['full_image_path']),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        blurRadius: 10.0,
+                        spreadRadius: 4.0,
+                        offset: Offset(5.0, 5.0),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Image.network(
+                      photos[index]['full_image_path'],
+                      fit: BoxFit.contain,
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: MediaQuery.of(context).size.height / 4,
                     ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Image.network(
-                    photos[index]['full_image_path'],
-                    fit: BoxFit.contain,
-                    width: MediaQuery.of(context).size.width / 3,
-                    height: MediaQuery.of(context).size.height / 4,
                   ),
                 ),
               );
