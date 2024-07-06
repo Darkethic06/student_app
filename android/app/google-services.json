@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "630976598118",
+    "project_id": "north-point-school",
+    "storage_bucket": "north-point-school.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630976598118:android:bb5de06d9308e2e2e9dda7",
+        "android_client_info": {
+          "package_name": "in.truepid.northpoint"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3uxG6rXIYf5TWf-0N0APvuRdm8hhgxqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

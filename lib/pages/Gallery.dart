@@ -25,7 +25,6 @@ class _GalleryPageState extends State<GalleryPage> {
       Map result = jsonDecode(value.body);
       setState(() {
         photos = result['data'];
-        // print(photos);
       });
     });
   }
@@ -35,10 +34,9 @@ class _GalleryPageState extends State<GalleryPage> {
       context: context,
       builder: (BuildContext context) {
         return Scaffold(
-          backgroundColor: Colors.transparent, // Make background transparent
+          backgroundColor: Colors.transparent,
           body: Stack(
             children: [
-              // Image content
               Center(
                 child: InteractiveViewer(
                   child: Image.network(
@@ -47,7 +45,6 @@ class _GalleryPageState extends State<GalleryPage> {
                   ),
                 ),
               ),
-              // Close button
               Positioned(
                 top: 20.0,
                 right: 20.0,
@@ -65,7 +62,6 @@ class _GalleryPageState extends State<GalleryPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchPhotos();
   }

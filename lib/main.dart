@@ -1,8 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:studentapp/controller/firebase_controller.dart';
+import 'package:studentapp/firebase_options.dart';
 import 'package:studentapp/views/SplashScreen.dart';
 
-void main() {
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  // await FirebaseController().initNotifications();
   runApp(const MyApp());
 }
 
