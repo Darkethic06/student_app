@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:studentapp/controller/firebase_controller.dart';
+import 'package:studentapp/firebase_options.dart';
 import 'package:studentapp/pages/Dashboard.dart';
 import 'package:studentapp/utils/api.dart';
 import 'package:studentapp/utils/myColors.dart';
@@ -139,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                         errorText:
                             _validate ? 'Password Can\'t Be Empty' : null,
                         suffixIcon: IconButton(
-                          onPressed: () {
+                          onPressed: () async {
                             setState(() {
                               _obscureText = !_obscureText;
                             });
@@ -201,6 +204,8 @@ class _LoginPageState extends State<LoginPage> {
       String token = data['token'];
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
+      await FirebaseController().initNotifications();
+
       // if (token != null) {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => Dashboard()));

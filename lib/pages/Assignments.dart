@@ -44,7 +44,7 @@ class _AssignmentsPageState extends State<AssignmentsPage> {
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.white),
               title: Text(
-                "ASSGINMENT",
+                "ASSIGNMENT",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
               ),

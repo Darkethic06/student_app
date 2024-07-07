@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:studentapp/controller/firebase_controller.dart';
+import 'package:studentapp/firebase_options.dart';
 import 'package:studentapp/pages/Dashboard.dart';
 import 'package:studentapp/pages/Login.dart';
 
@@ -17,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _checkLoginStatus();
+
     Timer(
         Duration(seconds: 3),
         () => Navigator.pushReplacement(
@@ -30,6 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     _isLoggedIn = token != null;
+    if (token != null) {
+      await FirebaseController().initNotifications();
+    }
   }
 
   @override
